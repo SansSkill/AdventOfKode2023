@@ -1,3 +1,5 @@
+src/main/resources/days/
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
