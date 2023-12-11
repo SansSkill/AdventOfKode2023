@@ -2,8 +2,6 @@ package days
 
 import kotlin.math.abs
 
-typealias Pos = Pair<Int, Int>
-
 @Suppress("unused")
 object D10 : Day {
     private val grid = readFile()
