@@ -4,9 +4,6 @@ package days
 object D12 : Day {
     private val input = readFile().map { line -> line.split(" ").let { (l, r) -> l to r } }
 
-    private fun toRegex(s: String): Regex =
-        s.split(",").joinToString("\\.+", prefix = "\\.*", postfix = "\\.*") { n -> "#{$n}" }.toRegex()
-
     private fun getArrangements(s: String, ls: List<Int>): Long {
         val rangeDp = List(s.length) { i ->
             BooleanArray(s.length - i) { j ->
