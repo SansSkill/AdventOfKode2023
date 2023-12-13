@@ -20,7 +20,7 @@ fun main() {
     while (true) {
         println()
         print("Enter day to print: ")
-        readln().toIntOrNull()?.let { n ->
+        readln().trim().toIntOrNull()?.let { n ->
             fromDayNumber(n)?.let(::print) ?: println("Input is not a valid day")
         } ?: println("Input is not a valid number")
     }
