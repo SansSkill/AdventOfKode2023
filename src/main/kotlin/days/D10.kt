@@ -5,20 +5,20 @@ import kotlin.math.abs
 @Suppress("unused")
 object D10 : Day {
     private val grid = readFile()
-    private val loop: List<Pos>
+    private val loop: List<Pair<Int, Int>>
 
     init {
         val x = grid.indexOfFirst { s -> 'S' in s }
         val startPosition = x to grid[x].indexOf('S')
 
-        fun getNext(pos: Pos, dir: NESW): Pair<Pos, NESW>? {
+        fun getNext(pos: Pair<Int, Int>, dir: NESW): Pair<Pair<Int, Int>, NESW>? {
             val nextPos = pos + dir.toPos()
             val nextDirs = gridPositionToNESW(nextPos)
             if (dir.opposite() !in nextDirs) return null
             return nextPos to nextDirs.minus(dir.opposite()).first()
         }
 
-        val tmpLoop = mutableListOf<Pos>()
+        val tmpLoop = mutableListOf<Pair<Int, Int>>()
         for (startDir in NESW.entries) {
             tmpLoop.clear()
             tmpLoop.add(startPosition)
@@ -51,7 +51,7 @@ object D10 : Day {
             }
         }.toString()
 
-    private fun gridPositionToNESW(pos: Pos): List<NESW> =
+    private fun gridPositionToNESW(pos: Pair<Int, Int>): List<NESW> =
         when (grid[pos.first][pos.second]) {
             '|' -> listOf(NESW.NORTH, NESW.SOUTH)
             '-' -> listOf(NESW.EAST, NESW.WEST)
@@ -64,14 +64,14 @@ object D10 : Day {
             else -> error("Missed a char")
         }
 
-    private operator fun Pos.plus(other: Pos): Pos =
+    private operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> =
         first + other.first to second + other.second
 
     private enum class NESW {
         NORTH, EAST, SOUTH, WEST
     }
 
-    private fun NESW.toPos(): Pos = when (this) {
+    private fun NESW.toPos(): Pair<Int, Int> = when (this) {
             NESW.NORTH -> -1 to 0
             NESW.EAST -> 0 to 1
             NESW.SOUTH -> 1 to 0

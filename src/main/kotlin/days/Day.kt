@@ -1,7 +1,5 @@
 package days
 
-typealias Pos = Pair<Int, Int>
-
 interface Day {
     suspend fun part1(): String
     suspend fun part2(): String
