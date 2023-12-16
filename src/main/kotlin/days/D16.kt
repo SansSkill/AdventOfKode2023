@@ -31,7 +31,7 @@ object D16 : Day {
         while (next.isNotEmpty()) {
             next = next.mapNotNull { triple ->
                 val (x, y, dir) = triple
-                if (x !in grid.indices || y !in grid[0].indices || triple in seen)  return@mapNotNull null
+                if (x !in grid.indices || y !in grid[0].indices || triple in seen) return@mapNotNull null
                 boolGrid[x][y] = true
                 seen.add(triple)
                 next(x, y, dir).map { nextDir ->
