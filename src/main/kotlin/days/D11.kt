@@ -2,7 +2,7 @@ package days
 
 @Suppress("unused")
 object D11 : Day {
-    private val galaxies: List<Pos> = readFile().flatMapIndexed { x, line ->
+    private val galaxies: List<Pair<Int, Int>> = readFile().flatMapIndexed { x, line ->
         line.indices.filter { y -> line[y] == '#' }.map { y -> x to y }
     }
     private val emptyRows: List<Int> = galaxies.map(Pair<Int, Int>::first).toSet().let { set ->
