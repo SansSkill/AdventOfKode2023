@@ -27,18 +27,17 @@ object D16 : Day {
     private fun getEnergizedCells(start: Triple<Int, Int, NESW>): Int {
         val boolGrid = Array(grid.size) { BooleanArray(grid[0].length) }
         val seen = mutableSetOf<Triple<Int, Int, NESW>>()
-        var next = listOf(start)
-        while (next.isNotEmpty()) {
-            next = next.mapNotNull { triple ->
-                val (x, y, dir) = triple
-                if (x !in grid.indices || y !in grid[0].indices || triple in seen) return@mapNotNull null
-                boolGrid[x][y] = true
-                seen.add(triple)
-                next(x, y, dir).map { nextDir ->
-                    val (xo, yo) = nextDir.offset
-                    Triple(x + xo, y + yo, nextDir)
-                }
-            }.flatten()
+        val visitableCells = mutableListOf(start)
+        while (visitableCells.isNotEmpty()) {
+            val triple = visitableCells.removeFirst()
+            val (x, y, dir) = triple
+            if (x !in grid.indices || y !in grid[0].indices || triple in seen) continue
+            boolGrid[x][y] = true
+            seen.add(triple)
+            next(x, y, dir).forEach { nextDir ->
+                val (xo, yo) = nextDir.offset
+                visitableCells.add(Triple(x + xo, y + yo, nextDir))
+            }
         }
         return boolGrid.sumOf { row -> row.count { b -> b } }
     }
